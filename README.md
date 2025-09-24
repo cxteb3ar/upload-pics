@@ -1,36 +1,83 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Upload Pics
+
+Introducing **Upload Pics**, a simple and secure image uploader with temporary and permanent storage options.  
+It provides a clean API and an easy-to-use UI for managing and serving uploaded pictures.  
+
+Made with 💗 by [CuteBear](https://www.cutebear.in.th).
+
+## Features
+
+- 📸 **Image Uploads** — Upload `.png`, `.jpg`, `.jpeg`, `.webp`, or any image files.
+- ⏳ **Temporary & Permanent Storage** — Choose whether images expire or stay forever.
+- 🔒 **Authentication** — Protected endpoints using session-based authentication.
+- 🗑️ **File Management** — Delete uploaded images by ID or filename.
+- ⚡ **Redis-Powered** — Stores metadata (id, filename, upload time, TTL).
+- 📂 **Serve Like Static** — Images respond with proper `ETag`, `Last-Modified`, and cache headers.
+- 🚫 **Duplicate Filename Protection** — Prevents uploading files with the same filename.
+- ✨ **Copy & Share** — Easily copy public image URLs for sharing.
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+- Node.js 18+
+- Redis Instance
+- pnpm / npm / yarn (`pnpm` is recommended.)
 
+### Installation
+Download the repository or clone this:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/qxebear/upload-pics.git
+```
+Run install command:
+```bash
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Environment Setup
+- Create a `.env.local` file or rename [.env.example](/.env.example) to `.env.local`.
+- Grab your Redis URL.
+- Generate a [NextAuth.js](https://authjs.dev) secret key through [CLI](https://cli.authjs.dev):
+    ```bash
+    pnpx auth secret
+    ```
+- Choose your own email and password.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Run Development
+```bash
+pnpm dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## API Endpoints
+### Upload
+```http
+POST /api/upload
+```
+Upload a new image. Requires authentication.
+### Delete
+```http
+DELETE /api/upload/:id
+```
+Deletes an image and its metadata. Requires authentication.
+### Get Image
+```http
+GET /images/:filename
+```
+Fetch an image by its original filename, including the file extension.
 
-## Learn More
+## Contributing
+Contributions are welcome! 🎉
+If you’d like to improve **Upload Pics**, feel free to fork the repo and open a PR.
+Bug reports and feature requests are also appreciated.
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+This project is licensed under the [MIT License](/LICENSE).
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+> [!NOTE]
+> You're welcome to fork and use this project.
+> If you do, giving a little credit to me is appreciated. Thanks! <3
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+© 2023–present CuteBear. All rights reserved.
