@@ -42,7 +42,7 @@ pnpm install
     ```
 - Choose your own email and password.
 
-Run Development
+### Run Development
 ```bash
 pnpm dev
 ```
