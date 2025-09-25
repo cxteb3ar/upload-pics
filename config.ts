@@ -1,6 +1,6 @@
 export default {
   images: {
-    limit: 5, // limit max stroage for images
+    limit: 10, // limit max stroage for images
   },
 } as Config;
 
