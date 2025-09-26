@@ -178,24 +178,10 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const existing = await redis.lRange(LIST_KEY, 0, -1);
-    for (const entry of existing) {
-      const parsed: ListEntry = JSON.parse(entry);
-      if (parsed.filename === file.name) {
-        const exists = await redis.exists(`uploads:images:${parsed.id}`);
-        if (exists) {
-          return NextResponse.json(
-            { error: { message: "Duplicate filename" }, success: false },
-            { status: 400 },
-          );
-        }
-      }
-    }
-
     const buffer = Buffer.from(await file.arrayBuffer());
     const id = randomUUID();
-    const filename = file.name;
-    const ext = filename.split(".").pop() || "dat";
+    const ext = file.name.split(".").pop() || "dat";
+    const filename = `${randomUUID()}.${ext}`;
     const date = new Date().toISOString();
 
     const fileData = {
@@ -210,7 +196,7 @@ export async function POST(req: NextRequest) {
       ...(ttl && { EX: ttl }),
     });
 
-    const listEntry = JSON.stringify({ id, filename: file.name });
+    const listEntry = JSON.stringify({ id, filename });
     await redis.rPush(LIST_KEY, listEntry);
 
     if (ttl) {
